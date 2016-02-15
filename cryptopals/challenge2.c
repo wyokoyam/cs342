@@ -32,10 +32,10 @@ int main(int argc, char *argv[]) {
     return 1;
   }	
 
-  char *result = malloc(bytesLen);
+  char *result = malloc(bytesLen1);
 
-  for(int x = 0; x<bytesLen;x++){
-  	*result[x] = *bytes1[x] ^ *bytes2[x];
+  for(int x = 0; x<bytesLen1;x++){
+  	result[x] = bytes1[x] ^ bytes2[x];
   }
 
   printf("%s \n", result);
