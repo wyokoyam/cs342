@@ -40,5 +40,22 @@ int main(int argc, char *argv[]) {
 
   printf("%s \n", result);
 
+
+  //unsure about this bit...
+  char *hexStr = malloc(bytesLen1 * 2)
+  //trying to convert byte strings back to hex
+  //nubmers: 48-57
+  //letters: 97-102
+  char byteStrToHex(char byteStr, char hexStr){
+    for(int x = 0; x < bytesLen1*2; x++){
+      if(byteStr>=0 && byteStr<10){
+        *byteStr += 48;
+      }
+      if(byteStr>9 && byteStr<17){
+        *byteStr +=97;
+      }
+    }
+  }
+
   return 0;
 }
