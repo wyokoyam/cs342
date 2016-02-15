@@ -3,6 +3,7 @@
 
 //Trying to XOR a string with a single character
 
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -28,12 +29,50 @@ int main(int argc, char *argv[]) {
   //XOR against bytes, must convert all ascii values of hex possibilities to bytes
   //worried about memory here?
 
+  float *topScore = malloc(result);
   for (int x = 0; x < 256; x++) {
     printf("%d = %c\n", x, x);
     for(int y = 0; y<bytesLen1; y++){
     	result[y] = bytes1[y] ^ (char) x;
     }
-    printf("%s \n", result);
-}	
+    printf("%s \n", result); 
+
+    float *score = malloc(result); //unsure about how big this should be
+    for (i = 0; result[i] != 0; i++){ 
+    	if(result[i] == "e" || result[i] == "E"){
+    		score += 12;
+    	}
+    	if(result[i] == "t" || result[i] == "T"){
+    		score += 9.1;
+    	}
+    	if(result[i] == "a" || result[i] == "A"){
+    		score += 8.1;
+    	}
+    	if(result[i] == "o" || result[i] == "O"){
+    		score += 7.7;
+    	}
+    	if(result[i] == "i" || result[i] == "I"){
+    		score += 7.3;
+    	}
+    	if(result[i] == "n" || result[i] == "N"){
+    		score += 7;
+    	}
+    	if(result[i] == "s" || result[i] == "S"){
+    		score += 6.3;
+    	}
+    	if(result[i] == "r" || result[i] == "R"){
+    		score += 6;
+    	}
+    	if(result[i] == "h" || result[i] == "H"){
+    		score += 5.9;
+    	}
+    }
+    if(score > topScore){
+    	topScore = score;
+    	printf("%s\n", result);
+    	printf("%f\n", topScore);
+    }
+  }	
+
   return 0;
 }
