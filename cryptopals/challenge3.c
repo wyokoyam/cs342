@@ -39,9 +39,9 @@ int main(int argc, char *argv[]) {
 
     int *score = malloc(result); //unsure about how big this should be
     for (int i = 0; result[i] != 0; i++){ 
-    	if(result[i] == "e" || result[i] == "E"){
+    	if(result[i] == (char) "e" || result[i] == (char)"E"){
     		score += 12;}
-    	if(result[i] == "t" || result[i] == "T"){
+    	if(result[i] == (char)"t" || result[i] == (char)"T"){
     		score += 9;}
     	if(result[i] == "a" || result[i] == "A"){
     		score += 8;}
