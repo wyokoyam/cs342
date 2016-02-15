@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 
     int score = 0;
     int i=0;
-  	char str[]= *result;
+  	char str[]= result;
   	char c;
   	while (str[i]){
     c=str[i];
