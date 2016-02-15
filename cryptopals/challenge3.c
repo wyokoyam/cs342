@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   //really unsure from here down
 
   int topScore = 0;
-  for (int x = 0; x < 256; x++) {
+  for (int x = 0; x < 127; x++) {
     printf("%d = %c\n", x, x);
     for(int y = 0; y<bytesLen1; y++){
     	result[y] = bytes1[y] ^ (char) x;
@@ -46,7 +46,11 @@ int main(int argc, char *argv[]) {
     c=str[i];
     putchar (tolower(c));
     if(c == 101){
-    	score += 12;}
+    	score += 12;
+    }
+    if(c == 116){
+    	score += 9;
+    }
     i++;
   	}
 
