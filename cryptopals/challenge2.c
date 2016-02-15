@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 
 
   //unsure about this bit...
-  char *hexStr = malloc(bytesLen1 * 2)
+  char *hexStr = malloc(bytesLen1 * 2);
   //trying to convert byte strings back to hex
   //nubmers: 48-57
   //letters: 97-102
