@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     printf("%s \n", result); 
 
     int score = 0; //unsure about how big this should be
-    for (int i = 0; result[i] != 0; i++){ 
+    for (int i = 0; i < bytesLen1; i++){ 
     	if(result[i] == 101 || result[i] == 69){
     		score += 12;}
     	// if(result[i] == "t" || result[i] == "T"){
