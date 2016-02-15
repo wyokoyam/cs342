@@ -28,13 +28,15 @@ int main(int argc, char *argv[]) {
   //XOR against bytes, must convert all ascii values of hex possibilities to bytes
   //worried about memory here?
 
-  //TODO
-  for(loop through all hex chars in bytes){
-  	for(int x = 0; x<bytesLen1;x++){
-  		result[x] = bytes1[x] ^ ;
-  	}
+  for (int x = 0; x < 256; x++) {
+    printf("%d = %c\n", x, x);
+    for(int y = 0; y<bytesLen1; y++){
+    	result[y] = bytes1[y] ^ (char) x;
+    }
+    printf("%s \n", result);
+}	
 
-  	printf("%s \n", result);
+  	
   }
   return 0;
 }
