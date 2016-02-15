@@ -49,10 +49,10 @@ int main(int argc, char *argv[]) {
   char byteStrToHex(char byteStr, char hexStr){
     for(int x = 0; x < bytesLen1*2; x++){
       if(byteStr>=0 && byteStr<10){
-        *byteStr += 48;
+        byteStr += 48;
       }
       if(byteStr>9 && byteStr<17){
-        *byteStr +=97;
+        byteStr +=97;
       }
     }
   }
