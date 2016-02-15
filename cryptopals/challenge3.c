@@ -28,6 +28,7 @@ int main(int argc, char *argv[]) {
 
   //XOR against bytes, must convert all ascii values of hex possibilities to bytes
   //worried about memory here?
+  //really unsure from here down
 
   int topScore = 0;
   for (int x = 0; x < 256; x++) {
@@ -37,34 +38,25 @@ int main(int argc, char *argv[]) {
     }
     printf("%s \n", result); 
 
-    int score = 0; //unsure about how big this should be
-    for (int i = 0; i < bytesLen1; i++){ 
-    	if(result[i] == 101 || result[i] == 69){
-    		score += 12;}
-    	// if(result[i] == "t" || result[i] == "T"){
-    	// 	score += 9;}
-    	// if(result[i] == "a" || result[i] == "A"){
-    	// 	score += 8;}
-    	// if(result[i] == "o" || result[i] == "O"){
-    	// 	score += 8;}
-    	// if(result[i] == "i" || result[i] == "I"){
-    	// 	score += 7;}
-    	// if(result[i] == "n" || result[i] == "N"){
-    	// 	score += 7;}
-    	// if(result[i] == "s" || result[i] == "S"){
-    	// 	score += 6;}
-    	// if(result[i] == "r" || result[i] == "R"){
-    	// 	score += 6;}
-    	// if(result[i] == "h" || result[i] == "H"){
-    	// 	score += 6;}
-    }
+    int score = 0;
+    int i=0;
+  	char str[]= *result;
+  	char c;
+  	while (str[i]){
+    c=str[i];
+    putchar (tolower(c));
+    if(c == 101){
+    	score += 12;}
+    i++;
+  	}
 
+  	printf("%d\n", score);
     if(score > topScore){
     	topScore = score;
     	printf("%s\n", result);
     	printf("%f\n", topScore);
-    }
-  }	
-
+    	}
+  	}
+  	printf("%d\n", topScore);	
   return 0;
 }
