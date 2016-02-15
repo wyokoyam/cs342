@@ -37,11 +37,12 @@ int main(int argc, char *argv[]) {
     }
     printf("%s \n", result); 
 
+    result = 
     int *score = malloc(result); //unsure about how big this should be
     for (int i = 0; result[i] != 0; i++){ 
-    	if(result[i] == (char) "e" || result[i] == (char)"E"){
+    	if(result[i] == 101 || result[i] == 69{
     		score += 12;}
-    	if(result[i] == (char)"t" || result[i] == (char)"T"){
+    	if(result[i] == "t" || result[i] == "T"){
     		score += 9;}
     	if(result[i] == "a" || result[i] == "A"){
     		score += 8;}
