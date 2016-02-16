@@ -40,26 +40,5 @@ int main(int argc, char *argv[]) {
 
   printf("%s \n", result);
 
-  //THIS SECTION DOES NOT WORK, COME BACK TO LATER?
-  // byteStrToHex(char* sOutputStr);
-
-  // //unsure about this bit...
-  // char *hexStr = malloc(bytesLen1 * 2);
-  // //trying to convert byte strings back to hex
-  // //nubmers: 48-57
-  // //letters: 97-102
-  // char byteStrToHex(char byteStr){
-  //   for(int x = 0; x < bytesLen1*2; x++){
-  //     if(byteStr[x]>=0 && byteStr[x]<10){
-  //       byteStr[x] += 48;
-  //     }
-  //     if(byteStr[x]>9 && byteStr[x]<17){
-  //       byteStr[x] +=97;
-  //     }
-  //   }
-  //   printf("%s\n", byteStr);
-  //   return byteStr;
-  // }
-
   return 0;
 }
