@@ -37,14 +37,15 @@ int main(int argc, char *argv[]) {
 
   double topScore = 0;
   char* bestString = malloc(bytesLen1);
+  char* bestKey = malloc(sizeof(char));// please please hold the key
   for (int x = 0; x < 128; x++) {
-    //printf("%d = %c\n", x, x);
     char* letterCount = malloc(sizeof(char)*128);
     for(int y = 0; y<bytesLen1; y++){
     	result[y] = bytes1[y] ^ (char) x;
       result[y] = tolower(result[y]);
       letterCount[result[y]] = letterCount[result[y]] + 1;
       }
+    char key = (char)x; //hold this key here, for reference towards the bottom
     
     double score = 100;
     for(int x = 0; x < 26; x++){
@@ -66,29 +67,26 @@ int main(int argc, char *argv[]) {
     double punctScore = ((double)punctTotal)/((double)bytesLen1)*100.0;
     double spaceScore = ((double)spaceTotal)/((double)bytesLen1)*100.0;
 
+    //will exclude strings that have too much punctuation
     if(punctScore>25.0){
       score = -1;
     }
+    //will exclude strings that have too much white space
     score = score - fabs(spaceScore - (1.0/6.0)*100.0);
 
+    //will keep track of the top scoring string
     if(score>topScore){
       topScore = score;
-      //*bestString = *result;
-      //for bestString[i] = result[i]
+      bestKey = key;
       for(int s = 0; s < bytesLen1; s++){
         bestString[s] = result[s];
       }
-      for(int i = 0; i < bytesLen1; i++){
-        //printf("%d", bytesLen1);
+    }
+    }
+    for(int i = 0; i < bytesLen1; i++){
         printf("%c", bestString[i]);
       }
-      printf("\n");
-      //printf("%s\n", *bestString);
-    }
-
-    //printf("%s This is what I'm searching for\n", result, score);
-    }
-    //printf("%s\n", *bestString);
-    //printf("%s \n", result);
+    printf("\n");
+    printf("%c \n", bestKey); //should print out the key that was used for the best string
   return 0;
 }
