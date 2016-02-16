@@ -10,6 +10,7 @@
 #include "crypto-utils.h"
 #include "crypto-utils.c"
 #include "base64.h"
+#include <math.h>
 
 // Compile with: gcc challenge3.c base64.c crypto-utils.c -g -o challenge3
 
@@ -31,14 +32,14 @@ int main(int argc, char *argv[]) {
       8.617, 1.492,2.782,4.253,12.702,2.228,2.015,6.094,6.966,
       .153,.772,4.025,2.406,6.749, 7.507,1.929,.095,5.987,
       6.327,9.056,2.758,.0978,2.36,.15,1.974,.074
-    }
+    };
 
 
   double topScore = 0;
-  char bestString = malloc(result);
+  char* bestString = malloc(bytesLen1);
   for (int x = 0; x < 128; x++) {
     //printf("%d = %c\n", x, x);
-    char* letterCount = 128;
+    char* letterCount = malloc(sizeof(char)*128);
     for(int y = 0; y<bytesLen1; y++){
     	result[y] = bytes1[y] ^ (char) x;
       result[y] = tolower(result[y]);
@@ -48,20 +49,46 @@ int main(int argc, char *argv[]) {
     double score = 100;
     for(int x = 0; x < 26; x++){
       //for 97-122 (a-z)
-      score = score - fabs((letterCount[x+97]/bytesLen1)*100 - frequencyTable[x]);
+      score = score - fabs(((double)letterCount[x+97]/(double)bytesLen1)*100.0 - frequencyTable[x]);
       }
+
+    int spaceTotal = 0;
+    int punctTotal = 0;
+    for(int x = 0; x < 128; x++){
+      if(ispunct(x)){
+        punctTotal = punctTotal + letterCount[x];
+      }
+      if(isspace(x)){
+        spaceTotal = spaceTotal + letterCount[x];
+      }
+    }
+
+    double punctScore = ((double)punctTotal)/((double)bytesLen1)*100.0;
+    double spaceScore = ((double)spaceTotal)/((double)bytesLen1)*100.0;
+
+    if(punctScore>25.0){
+      score = -1;
+    }
+    score = score - fabs(spaceScore - (1.0/6.0)*100.0);
+
     if(score>topScore){
       topScore = score;
-      bestString = result
+      //*bestString = *result;
+      //for bestString[i] = result[i]
+      for(int s = 0; s < bytesLen1; s++){
+        bestString[s] = result[s];
+      }
+      for(int i = 0; i < bytesLen1; i++){
+        //printf("%d", bytesLen1);
+        printf("%c", bestString[i]);
+      }
+      printf("\n");
+      //printf("%s\n", *bestString);
     }
-    printf("%s \n", result, score);
+
+    //printf("%s This is what I'm searching for\n", result, score);
     }
+    //printf("%s\n", *bestString);
     //printf("%s \n", result);
-
-
-    
-
-
-  }
   return 0;
 }
