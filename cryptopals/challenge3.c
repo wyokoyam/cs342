@@ -26,41 +26,42 @@ int main(int argc, char *argv[]) {
 
   char *result = malloc(bytesLen1);
 
-  //XOR against bytes, must convert all ascii values of hex possibilities to bytes
-  //worried about memory here?
-  //really unsure from here down
+    static double frequencyTable[26] = 
+    {      
+      8.617, 1.492,2.782,4.253,12.702,2.228,2.015,6.094,6.966,
+      .153,.772,4.025,2.406,6.749, 7.507,1.929,.095,5.987,
+      6.327,9.056,2.758,.0978,2.36,.15,1.974,.074
+    }
 
-  int topScore = 0;
-  for (int x = 0; x < 127; x++) {
-    printf("%d = %c\n", x, x);
+
+  double topScore = 0;
+  char bestString = malloc(result);
+  for (int x = 0; x < 128; x++) {
+    //printf("%d = %c\n", x, x);
+    char* letterCount = 128;
     for(int y = 0; y<bytesLen1; y++){
     	result[y] = bytes1[y] ^ (char) x;
+      result[y] = tolower(result[y]);
+      letterCount[result[y]] = letterCount[result[y]] + 1;
+      }
+    
+    double score = 100;
+    for(int x = 0; x < 26; x++){
+      //for 97-122 (a-z)
+      score = score - fabs((letterCount[x+97]/bytesLen1)*100 - frequencyTable[x]);
+      }
+    if(score>topScore){
+      topScore = score;
+      bestString = result
     }
-    printf("%s \n", result); 
+    printf("%s \n", result, score);
+    }
+    //printf("%s \n", result);
 
-    int score = 0;
-    int i=0;
-  	char str[]= result; //something is up here "invalid initializer"
-  	char c;
-  	while (str[i]){
-    c=str[i];
-    putchar (tolower(c));
-    if(c == 101){
-    	score += 12;
-    }
-    if(c == 116){
-    	score += 9;
-    }
-    i++;
-  	}
 
-  	printf("%d\n", score);
-    if(score > topScore){
-    	topScore = score;
-    	printf("%s\n", result);
-    	printf("%f\n", topScore);
-    	}
-  	}
-  	printf("%d\n", topScore);	
+    
+
+
+  }
   return 0;
 }
