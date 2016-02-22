@@ -20,6 +20,7 @@
 
 #define numLines 327
 #define strLen 62 //includes \n \0
+#define file "4.txt"
 
 
 int main(int argc, char *argv[]) {
@@ -28,11 +29,18 @@ int main(int argc, char *argv[]) {
 //scan through the file and use that string for each of these
 	//score the output if you have time, then only grab the best one
 
-  FILE* inputFile = fopen("4.txt", "r");
+  FILE* inputFile = fopen(file, "r");
   FILE* outputMessages = fopen("outputMessages.txt", "w+");
+
+
 
   for(int i = 0; i < numLines; i++){
     char* line = ( char*) malloc(strLen);
+
+    if(!fgets(line, strLen, inputFile)){
+    	printf("%s\n", "Error reading line");
+    	exit(1);
+    }
 
     for(int x=0; x<strLen; x++){
         if (line[strLen-x] == '\n'){
@@ -118,5 +126,5 @@ int main(int argc, char *argv[]) {
       printf("\n");
       printf("%c \n", bestKey); //should print out the key that was used for the best string
     //return *bestString;
-      return *bestString;
+      return 0;
   }
