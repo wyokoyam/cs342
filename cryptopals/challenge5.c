@@ -44,10 +44,9 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  char *string = (char*) sInputStr1;
-  bytesLen = strlen(sInputStr1);
+  //char *string = (char*) sInputStr1;
   char *cipher = (char*) "ICE"; //unsure here
-  char *result = encodeWithCipher(string, cipher);
+  char *result = encodeWithCipher(bytes, cipher);
 
   //create byte to hex?
 
