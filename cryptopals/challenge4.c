@@ -44,12 +44,12 @@ int main(int argc, char *argv[]) {
     fputs("/n", outputMessages);
   }
 
-  return 0
+  return 0;
 }
 
-char* decode(char* hexStr){
-  int bytesLen1 = 0;
-    char *bytes1 = hexStrToBytes(strInput, &bytesLen1);
+	decode(char* hexStr){
+  	int bytesLen1 = 0;
+    char *bytes1 = hexStrToBytes(hexStr, &bytesLen1);
     if (!bytes1) {
       printf("Failure! Couldn't convert hex to bytes.\n");
       return 1;
@@ -105,11 +105,11 @@ char* decode(char* hexStr){
       //will keep track of the top scoring string
       if(score>topScore){
         topScore = score;
-        bestKey = key;
+        bestKey = (char)key;
         for(int s = 0; s < bytesLen1; s++){
           bestString[s] = result[s];
         }
-        bestString[s+1] = '\0';
+        bestString[bytesLen1] = '\0';
       }
       }
       // for(int i = 0; i < bytesLen1; i++){
@@ -117,5 +117,6 @@ char* decode(char* hexStr){
       //   }
       printf("\n");
       printf("%c \n", bestKey); //should print out the key that was used for the best string
-    return *bestString;
+    //return *bestString;
+      return *bestString;
   }
