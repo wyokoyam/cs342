@@ -13,6 +13,10 @@
 
 // Compile with: gcc challenge3.c base64.c crypto-utils.c -g -o challenge3
 
+#define ASCII_MAX 127
+#define NUM_LETTERS 26
+
+
 static char* sInputStr1 = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
 
 int main(int argc, char *argv[]) {
@@ -36,11 +40,11 @@ int main(int argc, char *argv[]) {
 
     double topScore = 0;
     char* bestString = malloc(bytesLen1);
-    char* bestKey = malloc(sizeof(char));// please please hold the key
-
+    //char* bestKey = malloc(sizeof(char));// please please hold the key
+    char bestKey;
   
-    for (int x = 0; x < 128; x++) {
-        char* letterCount = malloc(sizeof(char)*128);
+    for (int x = 0; x <= ASCII_MAX; x++) {
+        char* letterCount = malloc(sizeof(char)*ASCII_MAX);
         for(int y = 0; y<bytesLen1; y++){
     	   result[y] = bytes1[y] ^ (char) x;
             result[y] = tolower(result[y]);
@@ -49,14 +53,14 @@ int main(int argc, char *argv[]) {
         char key = (char)x; //hold this key here, for reference towards the bottom
     
         double score = 100;
-        for(int x = 0; x < 26; x++){
-        //for 97-122 (a-z)
+        for(int x = 0; x < NUM_LETTERS; x++){
+        //for ASCII 97-122 (a-z)
         score = score - fabs(((double)letterCount[x+97]/(double)bytesLen1)*100.0 - frequencyTable[x]);
         }
 
         int spaceTotal = 0;
         int punctTotal = 0;
-        for(int x = 0; x < 128; x++){
+        for(int x = 0; x <= ASCII_MAX; x++){
             if(ispunct(x)){
             punctTotal = punctTotal + letterCount[x];
             }
