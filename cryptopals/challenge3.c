@@ -38,6 +38,8 @@ int main(int argc, char *argv[]) {
   double topScore = 0;
   char* bestString = malloc(bytesLen1);
   char* bestKey = malloc(sizeof(char));// please please hold the key
+
+  
   for (int x = 0; x < 128; x++) {
     char* letterCount = malloc(sizeof(char)*128);
     for(int y = 0; y<bytesLen1; y++){

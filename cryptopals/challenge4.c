@@ -23,39 +23,7 @@
 #define file "4.txt"
 
 
-int main(int argc, char *argv[]) {
-
-//for every string input in the file, run it through this program
-//scan through the file and use that string for each of these
-	//score the output if you have time, then only grab the best one
-
-  FILE* inputFile = fopen(file, "r");
-  FILE* outputMessages = fopen("outputMessages.txt", "w+");
-
-
-
-  for(int i = 0; i < numLines; i++){
-    char* line = ( char*) malloc(strLen);
-
-    if(!fgets(line, strLen, inputFile)){
-    	printf("%s\n", "Error reading line");
-    	exit(1);
-    }
-
-    for(int x=0; x<strLen; x++){
-        if (line[strLen-x] == '\n'){
-            line[strLen-x] = '\0';
-        }
-    }
-    char* message = decode(line);
-    fputs(message, outputMessages);
-    fputs("/n", outputMessages);
-  }
-
-  return 0;
-}
-
-	decode(char* hexStr){
+char * decode(char* hexStr, double* currentScore, char* bestKey){
   	int bytesLen1 = 0;
     char *bytes1 = hexStrToBytes(hexStr, &bytesLen1);
     if (!bytes1) {
@@ -73,7 +41,7 @@ int main(int argc, char *argv[]) {
 
     double topScore = 0;
     char* bestString = malloc(bytesLen1*2);
-    char* bestKey = malloc(sizeof(char));// please please hold the key
+    //char* bestKey = malloc(sizeof(char));// please please hold the key
     for (int x = 0; x < 128; x++) {
       char* letterCount = malloc(sizeof(char)*128);
       for(int y = 0; y<bytesLen1; y++){
@@ -113,7 +81,7 @@ int main(int argc, char *argv[]) {
       //will keep track of the top scoring string
       if(score>topScore){
         topScore = score;
-        bestKey = (char)key;
+        *bestKey = (char)key;
         for(int s = 0; s < bytesLen1; s++){
           bestString[s] = result[s];
         }
@@ -123,8 +91,59 @@ int main(int argc, char *argv[]) {
       // for(int i = 0; i < bytesLen1; i++){
       //     printf("%c", bestString[i]);
       //   }
-      printf("\n");
-      printf("%c \n", bestKey); //should print out the key that was used for the best string
-    //return *bestString;
-      return 0;
+      *currentScore = topScore;
+      //printf("\n");
+      //printf("%c \n", *bestKey); //should print out the key that was used for the best string
+      //printf("%s \n", bestString);
+      return bestString;
+      //return 0;
   }
+
+int main(int argc, char *argv[]) {
+
+//for every string input in the file, run it through this program
+//scan through the file and use that string for each of these
+	//score the output if you have time, then only grab the best one
+
+  FILE* inputFile = fopen(file, "r");
+
+  double bestScore = 0;
+  char* bestMessage;
+  double* currentScore = malloc(sizeof(double));
+  char* currentKey = malloc(sizeof(char));
+  char bestKey; 
+
+  for(int i = 0; i < numLines; i++){
+    char* line = ( char*) malloc(strLen);
+
+    if(!fgets(line, strLen, inputFile)){
+    	printf("%s\n", "Error reading line");
+    	exit(1);
+    }
+
+    //printf("%s \n", line);
+
+    for(int x=0; x<strLen; x++){
+        if (line[strLen-x] == '\n'){
+            line[strLen-x] = '\0';
+        }
+    }
+    char* message = decode(line, currentScore, currentKey);
+    if(*currentScore>bestScore){
+    	bestScore = *currentScore;
+    	bestMessage = message;//this is not happening correctly?
+    	bestKey = *currentKey;
+    }
+    //save the score as a double
+   	//check to see if that is the best score
+
+    //fputs(message, outputMessages);
+    //puts("/n", outputMessages);
+  }
+  printf("%s\n", bestMessage);
+  printf("%c\n", bestKey);
+  printf("%lf\n", bestScore);
+  return 0;
+}
+
+	
