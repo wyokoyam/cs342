@@ -12,7 +12,6 @@
 #include <string.h>
 #include <stdio.h>
 #include "crypto-utils.h"
-#include "crypto-utils.c"
 #include "base64.h"
 
 // Compile with: gcc challenge5.c base64.c crypto-utils.c -g -o challenge5
@@ -37,30 +36,30 @@ char* encodeWithCipher( char *inputStr, char *cipher) {
 
 int main(int argc, char *argv[]) {
 
-  int bytesLen = 0;
-  char *bytes = hexStrToBytes(sOutputStr, &bytesLen);
-  if (!bytes) {
-    printf("Failure! Couldn't convert hex to bytes.\n");
-    return 1;
-  }
-
-  //char *string = (char*) sInputStr1;
-  char *cipher = (char*) "ICE"; //unsure here
-  char *result = encodeWithCipher(sInputStr1, cipher);
-
-
-  int errors = 0;
-  //compare output string bytes to my encoded byte string
-  for(int x = 0; x<bytesLen; x++){
-    if(bytes[x] != result[x]){
-      errors += 1;
+    int bytesLen = 0;
+    char *bytes = hexStrToBytes(sOutputStr, &bytesLen);
+    if (!bytes) {
+        printf("Failure! Couldn't convert hex to bytes.\n");
+        return 1;
     }
-  }
-  if(errors == 0){
-    printf("%s\n", "Passed the test");
-  }
 
-  printf("%s \n", result);
+    //char *string = (char*) sInputStr1;
+    char *cipher = (char*) "ICE"; //unsure here
+    char *result = encodeWithCipher(sInputStr1, cipher);
 
-  return 0;
+
+    int errors = 0;
+    //compare output string bytes to my encoded byte string
+    for(int x = 0; x<bytesLen; x++){
+        if(bytes[x] != result[x]){
+        errors += 1;
+        }
+    }
+    if(errors == 0){
+        printf("%s\n", "Passed the test");
+    }
+
+    printf("%s \n", result);
+
+    return 0;
 }

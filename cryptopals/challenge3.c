@@ -8,7 +8,6 @@
 #include <string.h>
 #include <stdio.h>
 #include "crypto-utils.h"
-#include "crypto-utils.c"
 #include "base64.h"
 #include <math.h>
 
@@ -18,14 +17,14 @@ static char* sInputStr1 = "1b37373331363f78151b7f2b783431333d78397828372d363c783
 
 int main(int argc, char *argv[]) {
 
-  int bytesLen1 = 0;
-  char *bytes1 = hexStrToBytes(sInputStr1, &bytesLen1);
-  if (!bytes1) {
-    printf("Failure! Couldn't convert hex to bytes.\n");
-    return 1;
-  }
+    int bytesLen1 = 0;
+    char *bytes1 = hexStrToBytes(sInputStr1, &bytesLen1);
+    if (!bytes1) {
+        printf("Failure! Couldn't convert hex to bytes.\n");
+        return 1;
+    }
 
-  char *result = malloc(bytesLen1);
+    char *result = malloc(bytesLen1);
 
     static double frequencyTable[26] = 
     {      
@@ -35,60 +34,60 @@ int main(int argc, char *argv[]) {
     };
 
 
-  double topScore = 0;
-  char* bestString = malloc(bytesLen1);
-  char* bestKey = malloc(sizeof(char));// please please hold the key
+    double topScore = 0;
+    char* bestString = malloc(bytesLen1);
+    char* bestKey = malloc(sizeof(char));// please please hold the key
 
   
-  for (int x = 0; x < 128; x++) {
-    char* letterCount = malloc(sizeof(char)*128);
-    for(int y = 0; y<bytesLen1; y++){
-    	result[y] = bytes1[y] ^ (char) x;
-      result[y] = tolower(result[y]);
-      letterCount[result[y]] = letterCount[result[y]] + 1;
-      }
-    char key = (char)x; //hold this key here, for reference towards the bottom
+    for (int x = 0; x < 128; x++) {
+        char* letterCount = malloc(sizeof(char)*128);
+        for(int y = 0; y<bytesLen1; y++){
+    	   result[y] = bytes1[y] ^ (char) x;
+            result[y] = tolower(result[y]);
+            letterCount[result[y]] = letterCount[result[y]] + 1;
+        }
+        char key = (char)x; //hold this key here, for reference towards the bottom
     
-    double score = 100;
-    for(int x = 0; x < 26; x++){
-      //for 97-122 (a-z)
-      score = score - fabs(((double)letterCount[x+97]/(double)bytesLen1)*100.0 - frequencyTable[x]);
-      }
+        double score = 100;
+        for(int x = 0; x < 26; x++){
+        //for 97-122 (a-z)
+        score = score - fabs(((double)letterCount[x+97]/(double)bytesLen1)*100.0 - frequencyTable[x]);
+        }
 
-    int spaceTotal = 0;
-    int punctTotal = 0;
-    for(int x = 0; x < 128; x++){
-      if(ispunct(x)){
-        punctTotal = punctTotal + letterCount[x];
-      }
-      if(isspace(x)){
-        spaceTotal = spaceTotal + letterCount[x];
-      }
-    }
+        int spaceTotal = 0;
+        int punctTotal = 0;
+        for(int x = 0; x < 128; x++){
+            if(ispunct(x)){
+            punctTotal = punctTotal + letterCount[x];
+            }
+            if(isspace(x)){
+                spaceTotal = spaceTotal + letterCount[x];
+            }
+        }
 
-    double punctScore = ((double)punctTotal)/((double)bytesLen1)*100.0;
-    double spaceScore = ((double)spaceTotal)/((double)bytesLen1)*100.0;
+        double punctScore = ((double)punctTotal)/((double)bytesLen1)*100.0;
+        double spaceScore = ((double)spaceTotal)/((double)bytesLen1)*100.0;
 
-    //will exclude strings that have too much punctuation
-    if(punctScore>25.0){
-      score = -1;
-    }
-    //will exclude strings that have too much white space
-    score = score - fabs(spaceScore - (1.0/6.0)*100.0);
+        //will exclude strings that have too much punctuation
+        if(punctScore>25.0){
+            score = -1;
+        }
+        //will exclude strings that have too much white space
+        score = score - fabs(spaceScore - (1.0/6.0)*100.0);
 
-    //will keep track of the top scoring string
-    if(score>topScore){
-      topScore = score;
-      bestKey = key;
-      for(int s = 0; s < bytesLen1; s++){
-        bestString[s] = result[s];
-      }
-    }
+        //will keep track of the top scoring string
+        if(score>topScore){
+            topScore = score;
+            bestKey = key;
+            for(int s = 0; s < bytesLen1; s++){
+                bestString[s] = result[s];
+            }
+        }
     }
     for(int i = 0; i < bytesLen1; i++){
         printf("%c", bestString[i]);
-      }
+    }
     printf("\n");
     printf("%c \n", bestKey); //should print out the key that was used for the best string
-  return 0;
+    return 0;
 }
