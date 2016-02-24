@@ -108,7 +108,8 @@ int main(int argc, char *argv[]) {
     char *lineBuffer = NULL;
     size_t lineBufferLen = 0;
     int lineLength = 0;
-  	while ((lineLength = getline(&lineBuffer, &lineBufferLen, inputFile))) {
+    int lineNum = 0;
+  	while ((lineLength = getline(&lineBuffer, &lineBufferLen, inputFile)) != -1) {
   		if (lineBuffer[lineLength - 1] == '\n') {
   			lineBuffer[lineLength - 1] = '\0';
   		}
@@ -119,6 +120,8 @@ int main(int argc, char *argv[]) {
     		bestMessage = message;
     		bestKey = *currentKey;
     	}
+      printf("Processed line: %d\n", lineNum);
+      lineNum++;
   	}
 
   	fclose(inputFile);
