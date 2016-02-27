@@ -86,12 +86,20 @@ int main(int argc, char *argv[]) {
             for(int s = 0; s < bytesLen1; s++){
                 bestString[s] = result[s];
             }
+            free(letterCount);
         }
+
     }
+
+    free(result);
+    free(bytes1);
+
     for(int i = 0; i < bytesLen1; i++){
         printf("%c", bestString[i]);
     }
     printf("\n");
     printf("%c \n", bestKey); //should print out the key that was used for the best string
+
+    free(bestString);
     return 0;
 }

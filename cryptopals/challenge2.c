@@ -31,6 +31,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }	
 
+
     char *result = malloc(bytesLen1);
 
     for(int x = 0; x<bytesLen1;x++){
@@ -38,6 +39,8 @@ int main(int argc, char *argv[]) {
     }
 
     printf("%s \n", result);
-
+    free(result);
+    free(bytes1);
+    free(bytes2);
     return 0;
 }

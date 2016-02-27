@@ -43,7 +43,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    //char *string = (char*) sInputStr1;
     char *cipher = (char*) "ICE"; //unsure here
     char *result = encodeWithCipher(sInputStr1, cipher);
 
@@ -58,8 +57,8 @@ int main(int argc, char *argv[]) {
     if(errors == 0){
         printf("%s\n", "Passed the test");
     }
-
     printf("%s \n", result);
-
+    free(bytes);
+    free(result);
     return 0;
 }

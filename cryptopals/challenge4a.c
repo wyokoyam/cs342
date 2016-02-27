@@ -30,6 +30,7 @@ char * decode(char* hexStr, double* currentScore, char* bestKey){
     	printf("Failure! Couldn't convert hex to bytes.\n");
     	return NULL;
     }
+
     char *result = malloc(bytesLen1);
 	static double frequencyTable[NUM_LETTERS] = 
     	{8.617, 1.492,2.782,4.253,12.702,2.228,2.015,6.094,6.966,
@@ -39,7 +40,6 @@ char * decode(char* hexStr, double* currentScore, char* bestKey){
 
     double topScore = 0;
     char* bestString = malloc(bytesLen1*2);
-    //char* bestKey = malloc(sizeof(char));// please please hold the key
     for (int x = 0; x <= ASCII_MAX; x++) {
     	char* letterCount = malloc(sizeof(char)*ASCII_MAX);
     	for(int y = 0; y<bytesLen1; y++){
@@ -47,6 +47,7 @@ char * decode(char* hexStr, double* currentScore, char* bestKey){
         	result[y] = tolower(result[y]);
         	letterCount[result[y]] = letterCount[result[y]] + 1;
         }
+        
       	char key = (char)x; //hold this key here, for reference towards the bottom
      	double score = 100;
       	for(int x = 0; x < NUM_LETTERS; x++){//for 97-122 (a-z)
@@ -63,7 +64,6 @@ char * decode(char* hexStr, double* currentScore, char* bestKey){
           		spaceTotal = spaceTotal + letterCount[x];
         	}
       	}
-
       	double punctScore = ((double)punctTotal)/((double)bytesLen1)*100.0;
       	double spaceScore = ((double)spaceTotal)/((double)bytesLen1)*100.0;
 
@@ -84,9 +84,10 @@ char * decode(char* hexStr, double* currentScore, char* bestKey){
         	bestString[bytesLen1] = '\0';
       	}
     }
+
+    free(result);
     *currentScore = topScore;
-    //printf("%c \n", *bestKey); //should print out the key that was used for the best string
-    //printf("%s \n", bestString);
+    free(bytes1);
     return bestString;
 }
 
@@ -120,16 +121,18 @@ int main(int argc, char *argv[]) {
     		bestMessage = message;
     		bestKey = *currentKey;
     	}
-      printf("Processed line: %d\n", lineNum);
+      //printf("Processed line: %d\n", lineNum);
       lineNum++;
   	}
 
   	fclose(inputFile);
-
-  	printf("%s\n", bestMessage);
+  	printf("%s", bestMessage);
   	printf("%c\n", bestKey);
   	printf("%lf\n", bestScore);
-  	return 0;
+    free(currentScore);
+    free(currentKey);
+    free(bestMessage);
+    return 0;
 }
 
 	
